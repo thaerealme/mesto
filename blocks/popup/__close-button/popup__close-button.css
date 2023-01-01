@@ -7,7 +7,7 @@
   top: -40px;
   right: -40px;
   cursor: pointer;
-  background-image: url('/images/popup/popup__close-button.svg');
+  background-image: url('../../../images/popup/popup__close-button.svg');
   background-color: rgba(0, 0, 0, 0);
   background-size: cover;
   transition: opacity 0.2s linear;
