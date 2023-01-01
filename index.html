@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mesto</title>
+  <link rel="stylesheet" href="./pages/index.css">
+</head>
+
+<body class="root">
+  <header class="header">
+    <img src="./images/logo/logo__header.svg" alt="Лого шапка">
+  </header>
+  <main class="content">
+    <section class="profile">
+      <img src="./images/profile/profile__image.jpg" alt="Аватар" class="profile__image">
+      <div class="profile__info">
+        <div class="profile__about">
+          <p class="profile__name">Жак-Ив Кусто</p>
+          <input type="image" src="./images/profile/profile__button_type_edit.svg"
+            class="profile__button profile__button_type_edit opacity"></input>
+        </div>
+        <p class="profile__description">Исследователь океана</p>
+      </div>
+      <input type="image" src="./images/profile/profile__button_type_add.svg"
+        class="profile__button profile__button_type_add opacity"></input>
+    </section>
+    <section class="elements">
+      <article class="elements__item">
+        <img src="./images/elements/yosemite.jpg" alt="Йосемити горы" class="elements__image">
+        <div class="elements__footer">
+          <p class="elements__title">Йосемити</p>
+          <input type="image" src="./images/elements/elements__button-heart.svg" class="elements__button-heart">
+        </div>
+      </article>
+      <article class="elements__item">
+        <img src="./images/elements/elcapitan.jpg" alt="Эль Капитан горы" class="elements__image">
+        <div class="elements__footer">
+          <p class="elements__title">Эль Капитан</p>
+          <input type="image" src="./images/elements/elements__button-heart.svg" class="elements__button-heart">
+        </div>
+      </article>
+      <article class="elements__item">
+        <img src="./images/elements/sierra.jpg" alt="Сиерра горы" class="elements__image">
+        <div class="elements__footer">
+          <p class="elements__title">Сиерра</p>
+          <input type="image" src="./images/elements/elements__button-heart.svg" class="elements__button-heart">
+        </div>
+      </article>
+      <article class="elements__item">
+        <img src="./images/elements/mohave.jpg" alt="Мохаве пустыня" class="elements__image">
+        <div class="elements__footer">
+          <p class="elements__title">Мохаве</p>
+          <input type="image" src="./images/elements/elements__button-heart.svg" class="elements__button-heart">
+        </div>
+      </article>
+      <article class="elements__item">
+        <img src="./images/elements/catalina.jpg" alt="Каталина остров" class="elements__image">
+        <div class="elements__footer">
+          <p class="elements__title">Каталина</p>
+          <input type="image" src="./images/elements/elements__button-heart.svg" class="elements__button-heart">
+        </div>
+      </article>
+      <article class="elements__item">
+        <img src="./images/elements/bigsur.jpg" alt="Биг сюр дорога" class="elements__image">
+        <div class="elements__footer">
+          <p class="elements__title">Биг сюр</p>
+          <input type="image" src="./images/elements/elements__button-heart.svg" class="elements__button-heart">
+        </div>
+      </article>
+    </section>
+    <div class="popup">
+      <div class="popup__container">
+        <img src="./images/popup/popup__close-button.svg" alt="Закрыть окно" class="popup__close-button opacity">
+        <p class="popup__title">Редактировать профиль</p>
+        <form class="popup__form" action="#">
+          <input type="text" name="name" id="name" class="popup__input">
+          <input type="text" name="description" id="description" class="popup__input">
+          <button type="submit" class="popup__submit">Сохранить</button>
+        </form>
+      </div>
+    </div>
+  </main>
+  <footer class="footer">
+    <p class="footer__copyright">
+      © 2020 Mesto Russia
+    </p>
+  </footer>
+  <script src="./script/script.js"></script>
+</body>
+
+</html>

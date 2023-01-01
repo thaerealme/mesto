@@ -1,0 +1,7 @@
+.elements__button-heart {
+  height: 19px;
+}
+
+.elements__button-heart:hover {
+  opacity: 0.5;
+}
