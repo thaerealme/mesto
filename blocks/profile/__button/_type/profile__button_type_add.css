@@ -8,6 +8,7 @@
   background-image: url('../../../../images/profile/profile__button_type_add.svg');
   background-repeat: no-repeat;
   background-position: center;
+  background-size: 22px 22px;
   align-self: center;
 }
 
@@ -15,5 +16,6 @@
   .profile__button_type_add {
     margin-left: 0;
     width: 100%;
+    background-size: 16px 16px;
   }
 }
