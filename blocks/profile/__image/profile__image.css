@@ -1,5 +1,8 @@
 .profile__image {
   margin-right: 30px;
+  object-fit: cover;
+  max-width: 120px;
+  max-height: 120px;
   border: 1px solid #c4c4c4;
   border-radius: 50%;
 }
