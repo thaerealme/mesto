@@ -102,11 +102,12 @@ function addCards() {
   elementItem.querySelector('.elements__image').addEventListener('click', function (evt) {
     imagePopup.querySelector('.popup__image-description').textContent = elementItem.querySelector('.elements__title').textContent;
     imagePopup.querySelector('.popup__image').src = evt.target.src;
+    imagePopup.querySelector('.popup__image').alt = elementItem.querySelector('.elements__title').textContent;
     openImagePopup();
   });
   elementItem.querySelector('.elements__image').src = addPopupLinkInput.value;
   elementItem.querySelector('.elements__title').textContent = addPopupTitleInput.value;
-  elementItem.querySelector('.elements__image').alt = addPopupLinkInput.value;
+  elementItem.querySelector('.elements__image').alt = addPopupTitleInput.value;
   elementsList.prepend(elementItem);
 }
 
