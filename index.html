@@ -27,48 +27,16 @@
       <button type="button" class="profile__button profile__button_type_add opacity" aria-label="Добавить"></button>
     </section>
     <section class="elements">
-      <article class="elements__item">
-        <img src="./images/elements/yosemite.jpg" alt="Йосемити горы" class="elements__image">
-        <div class="elements__footer">
-          <h2 class="elements__title">Йосемити</h2>
-          <button type="button" class="elements__button-heart"></button>
-        </div>
-      </article>
-      <article class="elements__item">
-        <img src="./images/elements/elcapitan.jpg" alt="Эль Капитан горы" class="elements__image">
-        <div class="elements__footer">
-          <h2 class="elements__title">Эль Капитан</h2>
-          <button type="button" class="elements__button-heart"></button>
-        </div>
-      </article>
-      <article class="elements__item">
-        <img src="./images/elements/sierra.jpg" alt="Сиерра горы" class="elements__image">
-        <div class="elements__footer">
-          <h2 class="elements__title">Сиерра</h2>
-          <button type="button" class="elements__button-heart"></button>
-        </div>
-      </article>
-      <article class="elements__item">
-        <img src="./images/elements/mohave.jpg" alt="Мохаве пустыня" class="elements__image">
-        <div class="elements__footer">
-          <h2 class="elements__title">Мохаве</h2>
-          <button type="button" class="elements__button-heart"></button>
-        </div>
-      </article>
-      <article class="elements__item">
-        <img src="./images/elements/catalina.jpg" alt="Каталина остров" class="elements__image">
-        <div class="elements__footer">
-          <h2 class="elements__title">Каталина</h2>
-          <button type="button" class="elements__button-heart"></button>
-        </div>
-      </article>
-      <article class="elements__item">
-        <img src="./images/elements/bigsur.jpg" alt="Биг сюр дорога" class="elements__image">
-        <div class="elements__footer">
-          <h2 class="elements__title">Биг сюр</h2>
-          <button type="button" class="elements__button-heart"></button>
-        </div>
-      </article>
+      <template class="elements-template">
+        <article class="elements__item">
+          <button type="button" class="elements__button-delete opacity"></button>
+          <img src="" alt="" class="elements__image">
+          <div class="elements__footer">
+            <h2 class="elements__title"></h2>
+            <button type="button" class="elements__button-heart"></button>
+          </div>
+        </article>
+      </template>
     </section>
   </main>
   <footer class="footer">
@@ -86,6 +54,24 @@
           required>
         <button type="submit" class="popup__submit">Сохранить</button>
       </form>
+    </div>
+  </div>
+  <div class="popup popup_type_add">
+    <div class="popup__container">
+      <button type="button" class="popup__close-button opacity"></button>
+      <h3 class="popup__title">Новое место</h3>
+      <form class="popup__form" name="popup_edit-form" action="#">
+        <input type="text" name="name" id="title" placeholder="Название" class="popup__input" required>
+        <input type="url" name="link" id="link" placeholder="Ссылка на картинку" class="popup__input" required>
+        <button type="submit" class="popup__submit">Создать</button>
+      </form>
+    </div>
+  </div>
+  <div class="popup popup_type_image">
+    <div class="popup__container popup__container_type_image">
+      <button type="button" class="popup__close-button opacity"></button>
+      <img src="" alt="" class="popup__image">
+      <p class="popup__image-description"></p>
     </div>
   </div>
   <script src="./script/index.js"></script>
