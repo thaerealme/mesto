@@ -14,8 +14,6 @@ const profileDescription = document.querySelector('.profile__description');
 
 const popupNameInput = editPopup.querySelector('#name');
 const popupDescriptionInput = editPopup.querySelector('#description');
-popupNameInput.value = profileName.textContent;
-popupDescriptionInput.value = profileDescription.textContent;
 
 const addPopupTitleInput = addPopup.querySelector('#title');
 const addPopupLinkInput = addPopup.querySelector('#link');
@@ -69,17 +67,17 @@ function handleFormSubmit(evt) {
 
 function addFormSubmit(evt) {
   evt.preventDefault();
-  let card = {
+  const card = {
     name: addPopupTitleInput.value,
     link: addPopupLinkInput.value,
   };
-  card = createCard(card);
-  elementsList.prepend(card);
+  const cardTemplate = createCard(card);
+  elementsList.prepend(cardTemplate);
   evt.target.reset();
   closePopup(addPopup);
 }
 
-function createCard (item) {
+function createCard(item) {
   const templateElement = elements.cloneNode(true);
   const cardElement = templateElement.querySelector('.elements__item');
   cardElement.querySelector('.elements__image').src = item.link;
@@ -102,7 +100,11 @@ function createCard (item) {
 
 editForm.addEventListener('submit', handleFormSubmit);
 addForm.addEventListener('submit', addFormSubmit);
-editButton.addEventListener('click', () => openPopup(editPopup));
+editButton.addEventListener('click', () => {
+  popupNameInput.value = profileName.textContent;
+  popupDescriptionInput.value = profileDescription.textContent;
+  openPopup(editPopup);
+});
 addButton.addEventListener('click', () => openPopup(addPopup));
 closeButtons.forEach((button) => {
   const popup = button.closest('.popup');
