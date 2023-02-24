@@ -52,6 +52,7 @@ const elements = document.querySelector('.elements-template').content;
 
 function openPopup(popup) {
   popup.classList.add('popup__opened');
+  setPopupListeners(popup);
 }
 
 function closePopup(popup) {
@@ -98,6 +99,19 @@ function createCard(item) {
   return cardElement;
 }
 
+const setPopupListeners = (popup) => {
+  popup.addEventListener('click', (evt) => {
+    if (evt.target === popup) {
+      closePopup(popup);
+    }
+  });
+  document.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape') {
+      closePopup(popup);
+    }
+  });
+}
+
 editForm.addEventListener('submit', handleFormSubmit);
 addForm.addEventListener('submit', addFormSubmit);
 editButton.addEventListener('click', () => {
@@ -114,3 +128,9 @@ initialCards.forEach((item) => {
   const card = createCard(item);
   elementsList.append(card);
 });
+
+// editPopup.addEventListener('click', (evt) => {
+//   if (evt.target === editPopup) {
+//     closePopup(editPopup);
+//   }
+// });
