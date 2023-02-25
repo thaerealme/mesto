@@ -65,11 +65,11 @@ const keydownPopupHandler = (evt) => {
   if (evt.key === 'Escape') {
     closePopup(popup);
   }
-  document.removeEventListener('keydown', keydownPopupHandler);
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup__opened');
+  document.removeEventListener('keydown', keydownPopupHandler);
 }
 
 function handleFormSubmit(evt) {
@@ -81,6 +81,7 @@ function handleFormSubmit(evt) {
 
 function addFormSubmit(evt) {
   evt.preventDefault();
+  const formButton = addForm.querySelector('.popup__submit');
   const card = {
     name: addPopupTitleInput.value,
     link: addPopupLinkInput.value,
@@ -88,6 +89,8 @@ function addFormSubmit(evt) {
   const cardTemplate = createCard(card);
   elementsList.prepend(cardTemplate);
   evt.target.reset();
+  formButton.disabled = true;
+  formButton.classList.add('popup__submit_inactive');
   closePopup(addPopup);
 }
 
