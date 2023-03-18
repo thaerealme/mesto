@@ -1,9 +1,9 @@
-import {fullImage, fullImageDescription, openPopup, imagePopup} from './index.js';
 export class Card {
-  constructor(data, templateSelector) {
+  constructor(data, popup, templateSelector) {
     this._templateSelector = templateSelector;
     this._name = data.name;
     this._link = data.link;
+    this._popup = popup;
   }
   _getTemplate() {
     this._element = document
@@ -16,20 +16,27 @@ export class Card {
   }
   _setEventListeners() {
     this._element.querySelector('.elements__button-heart').addEventListener('click', () => {
-      this._element.querySelector('.elements__button-heart').classList.toggle('elements__button-heart_active');
+      this._handleLikeButtonClick();
     })
     this._element.querySelector('.elements__image').addEventListener('click', () => {
-      this._handleOpenPopup();
+      this._handleImageClick();
     })
     this._element.querySelector('.elements__button-delete').addEventListener('click', () => {
-      this._element.remove();
+      this._handleDeleteButtonClick();
     })
   }
+  _handleImageClick () {
+    this._handleOpenPopup();
+  }
+  _handleLikeButtonClick () {
+    this._element.querySelector('.elements__button-heart').classList.toggle('elements__button-heart_active');
+  }
+  _handleDeleteButtonClick() {
+    this._element.remove();
+    this._element = null;
+  }
   _handleOpenPopup() {
-    fullImage.src = this._link;
-    fullImage.alt = this._name;
-    fullImageDescription.textContent = this._name;
-    openPopup(imagePopup);
+    this._popup(this._name, this._link);
   }
   generateCard() {
     this._element = this._getTemplate();
