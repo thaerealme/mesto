@@ -1,9 +1,9 @@
 export class Card {
-  constructor(data, popup, templateSelector) {
+  constructor(data, openPreviewPopup, templateSelector) {
     this._templateSelector = templateSelector;
     this._name = data.name;
     this._link = data.link;
-    this._openPreviewPopup = popup;
+    this._openPreviewPopup = openPreviewPopup;
   }
   _getTemplate() {
     this._element = document
