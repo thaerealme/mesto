@@ -52,11 +52,10 @@ function handleProfileFormSubmit(evt) {
 
 function handleAddFormSubmit(evt) {
   evt.preventDefault();
-  const newCard = createCard({
+  const card = createCard({
     name: addPopupTitleInput.value,
     link: addPopupLinkInput.value
   }, handleOpenPopup, '.elements-template');
-  const card = newCard.generateCard();
   elementsList.prepend(card);
   evt.target.reset();
   validators[addForm.getAttribute('name')].resetValidationState();
@@ -84,8 +83,9 @@ popups.forEach((popup) => {
   })
 });
 
-const createCard = (card, popup, templateSelector) => {
-  return new Card(card, popup, templateSelector);
+const createCard = (card, handleOpenPopup, templateSelector) => {
+  const newCard = new Card(card, handleOpenPopup, templateSelector);
+  return newCard.generateCard();
 }
 
 function handleOpenPopup(name, link) {

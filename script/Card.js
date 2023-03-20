@@ -3,7 +3,7 @@ export class Card {
     this._templateSelector = templateSelector;
     this._name = data.name;
     this._link = data.link;
-    this._popup = popup;
+    this._openPreviewPopup = popup;
   }
   _getTemplate() {
     this._element = document
@@ -15,34 +15,36 @@ export class Card {
     return this._element;
   }
   _setEventListeners() {
-    this._element.querySelector('.elements__button-heart').addEventListener('click', () => {
+    this._elementHeart.addEventListener('click', () => {
       this._handleLikeButtonClick();
     })
-    this._element.querySelector('.elements__image').addEventListener('click', () => {
-      this._handleImageClick();
+    this._elementImage.addEventListener('click', () => {
+      this._handleCardClick();
     })
     this._element.querySelector('.elements__button-delete').addEventListener('click', () => {
       this._handleDeleteButtonClick();
     })
   }
-  _handleImageClick () {
+  _handleCardClick () {
     this._handleOpenPopup();
   }
   _handleLikeButtonClick () {
-    this._element.querySelector('.elements__button-heart').classList.toggle('elements__button-heart_active');
+    this._elementHeart.classList.toggle('elements__button-heart_active');
   }
   _handleDeleteButtonClick() {
     this._element.remove();
     this._element = null;
   }
   _handleOpenPopup() {
-    this._popup(this._name, this._link);
+    this._openPreviewPopup(this._name, this._link);
   }
   generateCard() {
     this._element = this._getTemplate();
+    this._elementImage = this._element.querySelector('.elements__image');
+    this._elementHeart = this._element.querySelector('.elements__button-heart');
     this._setEventListeners();
-    this._element.querySelector('.elements__image').src = this._link;
-    this._element.querySelector('.elements__image').alt = this._name;
+    this._elementImage.src = this._link;
+    this._elementImage.alt = this._name;
     this._element.querySelector('.elements__title').textContent = this._name;
     return this._element;
   }
