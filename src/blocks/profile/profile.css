@@ -1,6 +1,6 @@
 .profile {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   color: #fff;
   margin-bottom: 51px;
 }

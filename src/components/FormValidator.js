@@ -58,10 +58,4 @@ export class FormValidator {
     this._errorElement.textContent = errorMessage;
     this._errorElement.classList.add(this._validationConfig.errorClass);
   }
-
-  resetValidationState () {
-    this._buttonElement.disabled = true;
-    this._buttonElement.classList.add('popup__submit_inactive');
-  }
-
 }
