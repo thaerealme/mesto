@@ -14,6 +14,9 @@ const editForm = document.forms['popup_edit-form'];
 const editFormSubmit = editForm.querySelector('.popup__submit');
 const addFormSubmit = addForm.querySelector('.popup__submit');
 
+const editFormName = editForm.querySelector('#name');
+const editFormDescription = editForm.querySelector('#description');
+
 
 const elementsList = document.querySelector('.elements');
 
@@ -39,20 +42,21 @@ api.getUserInfo()
     })
     userInfo.updateAvatar(data)
   })
-  .catch((err) => {
-    console.log(err);
-  });
 
-api.getInitialCards()
-  .then((cards) => {
-    cards.forEach(card => {
-      const cardItem = createCard(card, handleImagePopup, '.elements-template', handleDeletePopup, api);
-      if(card.owner._id !== userInfo._userId) {
-        cardItem.querySelector('.elements__button-delete').remove();
-      }
-      elementsList.prepend(cardItem)
+  .then(api.getInitialCards()
+    .then(cards => {
+      const cardsList = new Section({
+        items: cards,
+        renderer: (cardItem) => {
+          const card = createCard(cardItem, handleImagePopup, '.elements-template', handleDeletePopup, api, handleCardLiked)
+          .generateCard(userInfo._userId);
+          cardsList.addItem(card);
+        },
+      }, '.elements')
+      cardsList.renderItems();
     })
-  })
+    .catch(err => console.log(err)))
+
   .catch((err) => {
     console.log(err);
   });
@@ -72,8 +76,10 @@ const addPopup = new PopupWithForm({
     renderLoading(true, editFormSubmit, 'Сохранить');
     api.addCard(formData)
     .then((data) => {
-      const card = createCard(data, handleImagePopup, '.elements-template', handleDeletePopup, api);
+      const card = createCard(data, handleImagePopup, '.elements-template', handleDeletePopup, api, handleCardLiked)
+      .generateCard(userInfo._userId);
       elementsList.prepend(card);
+      addPopup.close();
     })
     .catch(err => console.log(err))
     .finally(loading => renderLoading(true, editFormSubmit, 'Сохранить'))
@@ -89,6 +95,7 @@ const editPopup = new PopupWithForm({
     api.updateUserInfo(formData)
     .then(() => {
       userInfo.setUserInfo(formData)
+      editPopup.close();
     })
     .catch(err => console.log(err))
     .finally(loading => {
@@ -103,10 +110,10 @@ const deletePopup = new PopupWithConfirmation({
   handlePopupSubmit: (card, data) => {
     api.deleteCard(data._id)
     .then(res => {
-      card.remove();
+      card.deleteCard();
+      deletePopup.close();
     })
     .catch(err => console.log(err));
-    deletePopup.close();
   }
 })
 deletePopup.setEventListeners();
@@ -118,6 +125,7 @@ const avatarPopup = new PopupWithForm({
     api.updateAvatar(formData.avatar)
     .then(avatar => {
       userInfo.updateAvatar(avatar)
+      avatarPopup.close();
     })
     .catch(err => console.log(err))
     .finally(loading => renderLoading(false, editFormSubmit, 'Сохранить'))
@@ -125,7 +133,7 @@ const avatarPopup = new PopupWithForm({
 })
 avatarPopup.setEventListeners();
 
-editButton.addEventListener('click', handleEditPopup);
+editButton.addEventListener('click', handleEditPopupSubmit);
 addButton.addEventListener('click', () => {
   addPopup.open();
 })
@@ -133,15 +141,29 @@ editAvatar.addEventListener('click', () => {
   avatarPopup.open();
 })
 
-function createCard (card, handleImagePopup, templateSelector, handleDeletePopup, api) {
-  const newCard = new Card(card, handleImagePopup, templateSelector, handleDeletePopup, api);
-  return newCard.generateCard();
+function createCard (card, handleImagePopup, templateSelector, handleDeletePopup, api, handleCardLiked) {
+  return new Card(card, handleImagePopup, templateSelector, handleDeletePopup, api, handleCardLiked);
 }
 
-function handleEditPopup() {
-  const getInfo = userInfo.getUserInfo();
-  editForm.querySelector('#name').value = getInfo.name;
-  editForm.querySelector('#description').value = getInfo.description;
+
+function handleCardLiked(element, card) {
+  if(!element.classList.contains('elements__button-heart_active')) {
+    api.removeLike(card._cardId)
+    .then(res => {
+      card.like(res.likes);
+    })
+  } else {
+    api.like(card._cardId)
+    .then(res => {
+      card.like(res.likes);
+    })
+  }
+}
+
+function handleEditPopupSubmit() {
+  const user = userInfo.getUserInfo();
+  editFormName.value = user.name;
+  editFormDescription.value = user.description;
   editPopup.open();
 }
 
