@@ -48,8 +48,7 @@ api.getUserInfo()
       const cardsList = new Section({
         items: cards,
         renderer: (cardItem) => {
-          const card = createCard(cardItem, handleImagePopup, '.elements-template', handleDeletePopup, api, handleCardLiked)
-          .generateCard(userInfo._userId);
+          const card = createCard(cardItem, handleImagePopup, '.elements-template', handleDeletePopup, userInfo._userId, handleCardLiked);
           cardsList.addItem(card);
         },
       }, '.elements')
@@ -76,9 +75,14 @@ const addPopup = new PopupWithForm({
     renderLoading(true, editFormSubmit, 'Сохранить');
     api.addCard(formData)
     .then((data) => {
-      const card = createCard(data, handleImagePopup, '.elements-template', handleDeletePopup, api, handleCardLiked)
-      .generateCard(userInfo._userId);
-      elementsList.prepend(card);
+      const cardsList = new Section({
+        items: [data],
+        renderer: (cardItem) => {
+          const card = createCard(cardItem, handleImagePopup, '.elements-template', handleDeletePopup, userInfo._userId, handleCardLiked);
+          cardsList.createItem(card);
+        },
+      }, '.elements')
+      cardsList.renderItems();
       addPopup.close();
     })
     .catch(err => console.log(err))
@@ -107,8 +111,8 @@ editPopup.setEventListeners();
 
 const deletePopup = new PopupWithConfirmation({
   popupSelector: '.popup_type_delete',
-  handlePopupSubmit: (card, data) => {
-    api.deleteCard(data._id)
+  handlePopupSubmit: (card) => {
+    api.deleteCard(card._data._id)
     .then(res => {
       card.deleteCard();
       deletePopup.close();
@@ -141,22 +145,25 @@ editAvatar.addEventListener('click', () => {
   avatarPopup.open();
 })
 
-function createCard (card, handleImagePopup, templateSelector, handleDeletePopup, api, handleCardLiked) {
-  return new Card(card, handleImagePopup, templateSelector, handleDeletePopup, api, handleCardLiked);
+function createCard (card, handleImagePopup, templateSelector, handleDeletePopup, userId, handleCardLiked) {
+  const newCard = new Card(card, handleImagePopup, templateSelector, handleDeletePopup, userId, handleCardLiked);
+  return newCard.generateCard();
 }
 
 
 function handleCardLiked(element, card) {
-  if(!element.classList.contains('elements__button-heart_active')) {
+  if(element.classList.contains('elements__button-heart_active')) {
     api.removeLike(card._cardId)
     .then(res => {
       card.like(res.likes);
     })
+    .catch(err => console.log(err))
   } else {
     api.like(card._cardId)
     .then(res => {
       card.like(res.likes);
     })
+    .catch(err => console.log(err))
   }
 }
 
@@ -168,12 +175,11 @@ function handleEditPopupSubmit() {
 }
 
 function handleImagePopup(name, link) {
-  validators[addForm.getAttribute('name')].toggleButtonState();
   imagePopup.open(name,link);
 }
 
-function handleDeletePopup(evt, data) {
-  deletePopup.open(evt, data);
+function handleDeletePopup(card) {
+  deletePopup.open(card);
 }
 
 function renderLoading(isLoading, element, text) {
