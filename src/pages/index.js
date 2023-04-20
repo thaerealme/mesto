@@ -12,13 +12,11 @@ import '../pages/index.css';
 const addForm = document.forms['popup_add-form'];
 const editForm = document.forms['popup_edit-form'];
 const editFormSubmit = editForm.querySelector('.popup__submit');
-const addFormSubmit = addForm.querySelector('.popup__submit');
 
 const editFormName = editForm.querySelector('#name');
 const editFormDescription = editForm.querySelector('#description');
 
 
-const elementsList = document.querySelector('.elements');
 
 const editButton = document.querySelector('.profile__button_type_edit');
 const addButton = document.querySelector('.profile__button_type_add');
@@ -48,7 +46,7 @@ api.getUserInfo()
       const cardsList = new Section({
         items: cards,
         renderer: (cardItem) => {
-          const card = createCard(cardItem, handleImagePopup, '.elements-template', handleDeletePopup, userInfo._userId, handleCardLiked);
+          const card = createCard(cardItem);
           cardsList.addItem(card);
         },
       }, '.elements')
@@ -78,7 +76,7 @@ const addPopup = new PopupWithForm({
       const cardsList = new Section({
         items: [data],
         renderer: (cardItem) => {
-          const card = createCard(cardItem, handleImagePopup, '.elements-template', handleDeletePopup, userInfo._userId, handleCardLiked);
+          const card = createCard(cardItem);
           cardsList.createItem(card);
         },
       }, '.elements')
@@ -145,8 +143,8 @@ editAvatar.addEventListener('click', () => {
   avatarPopup.open();
 })
 
-function createCard (card, handleImagePopup, templateSelector, handleDeletePopup, userId, handleCardLiked) {
-  const newCard = new Card(card, handleImagePopup, templateSelector, handleDeletePopup, userId, handleCardLiked);
+function createCard (card) {
+  const newCard = new Card(card, handleImagePopup, '.elements-template', handleDeletePopup, userInfo.getUserId(), handleCardLiked);
   return newCard.generateCard();
 }
 

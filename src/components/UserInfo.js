@@ -8,7 +8,11 @@ export default class UserInfo {
         return {
             name: this._userName.textContent,
             description: this._userInfo.textContent,
+            id: this._userId
         }
+    }
+    getUserId () {
+        return this._userId;
     }
     setUserInfo (formData) {
         this._userName.textContent = formData.name;
